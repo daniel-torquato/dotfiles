@@ -1,0 +1,49 @@
+#!/bin/bash
+
+install_packages () {
+	sudo apt install -y \
+		cscope \
+		lightdm-gtk-greeter-settings \
+		network-manager-gnome \
+		thunar \
+		pavucontrol \
+		tmux \
+		vim \
+		zathura \
+		scrot
+	sudo apt install xfonts-terminus fonts-font-awesome fontconfig
+}
+
+config_keyboard () {
+	sudo cp etc/default/keyboard /etc/default/keyboard
+}
+
+config_lightdm () {
+	sudo cp etc/lightdm/lightdm* /etc/lightdm/
+}
+
+create_symlinks () {
+	mv $HOME/.bashrc $HOME/.bashrc.old
+	mv $HOME/.config/i3 $HOME/.config/i3.old
+	ln -sr i3 $HOME/.config/i3
+	ln -sr .bashrc $HOME/
+	ln -sr .bashrc.d $HOME/
+	ln -sr .tmux.conf $HOME/
+	ln -sr .Xdefault $HOME/
+	ln -sr .Xdefault.d $HOME/
+	ln -sr .vimrc $HOME/
+}
+
+install_vimpkgs () {
+	vim -c PluginInstall  -c quitall
+}
+
+
+case $1 in
+"*")
+	install_packages
+	config_keyboard
+	config_lightdm
+	config_symlinks
+	install_vimpkgs
+esac
