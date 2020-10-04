@@ -1,0 +1,40 @@
+!-------------------------------------------------------------------------------
+! resolution & colors
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+
+URxvt*geometry: 120x40
+URxvt*fading: 0
+
+URxvt.letterSpace: -1
+URxvt*termName: rxvt-256color
+
+!-------------------------------------------------------------------------------
+! theme
+#include ".Xdefault.d/themes/theme"
+!-------------------------------------------------------------------------------
+! fonts
+#include ".Xdefault.d/fonts"
+
+!-------------------------------------------------------------------------------
+URxvt*internalBorder: 3
+URxvt*saveLines: 10000
+URxvt*scrollBar: false
+
+!-------------------------------------------------------------------------------
+! tabbedex is not provided by default (Debian/Ubuntu)
+! put it in ~/.urxvt/
+URxvt.perl-lib: .urxvt/
+URxvt.perl-ext-common: font-size
+
+URxvt.keysym.C-equal: perl:font-size:reset
+
+!-------------------------------------------------------------------------------
+! Launch firefox with the a left click on a URL
+!URxvt.url-launcher: /usr/bin/x-www-browser
+!URxvt.matcher.button: o

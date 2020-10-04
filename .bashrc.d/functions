@@ -1,0 +1,130 @@
+op () {
+#	cd $HOME/Documents/Org/Estudo/Mestrado;
+	array=(*); \
+	for i in $(seq 0 ${#array})
+	do
+		echo "$i) ${array[$i]}";
+	done
+	read -p "Pick a number: " $n;
+	re='^[0-9]+$';
+	if [[ $n =~ $re ]]
+	then
+		cd ${array[$n]};
+	fi
+}
+
+## Bash ########################################################################
+
+self () {
+	#local files=($(ls -a ~/.vim/bundle/MyOrg | sed '/^\.*$/d')) idx=0;
+	##echo ${files[@]}
+	#for i in ${files[@]}
+	#do
+	#	echo "$idx ) $i";
+	#	let "idx++";
+	#done
+	#read c;
+	#echo ${files[$c]};
+	vim ~/.vim/bundle/MyOrg
+}
+
+reload () {
+	source $HOME/.bashrc
+}
+
+show_variables () {
+	# git
+	local user_email=$(git config --global user.email)
+	echo $user_email \| $GIT_EMAIL
+	local user_name=$(git config --global user.name)
+	echo $user_name \| $GIT_NAME
+}
+
+## GIT #########################################################################
+#
+function updateAll {
+	cd  $HOME/.vim/bundle/MyOrg
+	git add .
+	git commit -am "Update $(date)"
+	git push
+	cd -
+}
+git_color() {
+	COLOR_RED="\033[0;31m"
+	COLOR_YELLOW="\033[0;33m"
+	COLOR_GREEN="\033[0;32m"
+	COLOR_OCHRE="\033[38;5;95m"
+	COLOR_BLUE="\033[0;34m"
+	COLOR_WHITE="\033[0;37m"
+	COLOR_RESET="\033[0m"
+	local git_status="$(git status 2> /dev/null)"
+
+	if [[ ! $git_status =~ "working tree clean" ]]
+	then
+		echo -e $COLOR_RED;
+	elif [[ $git_status =~ "Your branch is ahead of" ]]
+	then
+		echo -e $COLOR_YELLOW;
+	elif [[ $git_status =~ "nothing to commit" ]]
+	then
+		echo -e $COLOR_GREEN
+	else
+		echo -e $COLOR_OCHRE;
+	fi
+}
+
+git_branch () {
+	local git_status="$(git status 2> /dev/null)"
+	local on_branch="On branch ([^${IFS}]*)"
+	local on_commit="HEAD detached at ([^${IFS}]*)"
+
+	if [[ $git_status =~ $on_branch ]]
+	then
+		local branch=${BASH_REMATCH[1]}
+#			echo " ($branch)"
+	elif [[ $git_status =~ $on_commit ]]
+	then
+		local commit=${BASH_REMATCH[1]}
+#		echo " ($commit)"
+	fi
+}
+
+config_git () {
+	# git
+	if test ! -z "$GIT_EMAIL"
+	then
+		git config --global user.email $GIT_EMAIL
+	else
+		echo Error: set git user email
+	fi
+
+	if test ! -z "$GIT_NAME"
+	then
+		git config --global user.name $GIT_NAME
+	else
+		echo Error: set git user name
+	fi
+}
+
+
+## X (urxvt) ###################################################################
+xload () {
+	echo $(xrdb -merge ~/.Xdefault)
+	echo $(xrdb -load ~/.Xdefault)
+}
+
+## Tmux ########################################################################
+toggle_tmux () {
+	file=~/.tmux.toggle
+	if [ ! -f $file ]
+	then
+		touch $file
+	else
+		rm $file
+	fi
+}
+
+
+
+
+
