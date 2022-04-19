@@ -1,4 +1,4 @@
-font pango:FontAwesome 12
+font pango:FontAwesome 16
 
 set $mod Mod4
 floating_modifier $mod

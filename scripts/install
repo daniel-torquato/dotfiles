@@ -1,5 +1,9 @@
 #!/bin/bash
 
+install_vundle () {
+	git clone  https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+}
+
 install_packages () {
 	sudo apt install -y \
 		cscope \
@@ -23,15 +27,16 @@ config_lightdm () {
 }
 
 create_symlinks () {
-	mv $HOME/.bashrc $HOME/.bashrc.old
-	mv $HOME/.config/i3 $HOME/.config/i3.old
-	ln -sr i3 $HOME/.config/i3
-	ln -sr .bashrc $HOME/
-	ln -sr .bashrc.d $HOME/
-	ln -sr .tmux.conf $HOME/
-	ln -sr .Xdefault $HOME/
-	ln -sr .Xdefault.d $HOME/
-	ln -sr .vimrc $HOME/
+	mv $HOME/.bashrc{,.old}
+	mv $HOME/.config/i3{,.old}
+	ln -srf i3 $HOME/.config/i3
+	ln -srf .bashrc $HOME/
+	ln -srf .bashrc.d $HOME/
+	ln -srf .tmux.conf $HOME/
+	ln -srf .Xdefault $HOME/
+	ln -srf .Xdefault.d $HOME/
+	ln -srf .vimrc $HOME/
+	ln -srf .xsessionrc $HOME/
 }
 
 install_vimpkgs () {
@@ -40,10 +45,11 @@ install_vimpkgs () {
 
 
 case $1 in
-"*")
+"doit")
+	install_vundle
 	install_packages
 	config_keyboard
 	config_lightdm
-	config_symlinks
+	create_symlinks
 	install_vimpkgs
 esac
