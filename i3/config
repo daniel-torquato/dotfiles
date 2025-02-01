@@ -101,7 +101,7 @@ client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
 client.background       #FFFFFF
 
 bar {
-	status_command i3status -c ~/.config/i3/i3status.conf
+	status_command ~/.config/i3/i3info
 	position top
 	colors {
 		background #000000
@@ -134,9 +134,10 @@ bindsym $mod+Tab focus left
 bindsym $mod+Shift+p --release exec "scrot -s ~/Pictures/Screenshots/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
 
 # Audio
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +3%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -3%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume $(pactl get-default-sink) +3%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume $(pactl get-default-sink) -3%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pactl get-default-sink) toggle
+bindsym XF86AudioNext exec --no-startup-id pactl set-sink-mute $(pactl get-default-sink) toggle
 
 # Brightness
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10

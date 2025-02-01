@@ -14,7 +14,8 @@ install_packages () {
 		tmux \
 		vim \
 		zathura \
-		scrot
+		scrot \
+		lm-sensors
 	sudo apt install xfonts-terminus fonts-font-awesome fontconfig
 }
 
@@ -29,6 +30,7 @@ config_lightdm () {
 create_symlinks () {
 	mv $HOME/.bashrc{,.old}
 	mv $HOME/.config/i3{,.old}
+	mv $HOME/.config/'gtk-3.0'{,.old}
 	ln -srf i3 $HOME/.config/i3
 	ln -srf .bashrc $HOME/
 	ln -srf .bashrc.d $HOME/
@@ -37,19 +39,29 @@ create_symlinks () {
 	ln -srf .Xdefault.d $HOME/
 	ln -srf .vimrc $HOME/
 	ln -srf .xsessionrc $HOME/
+	ln -srf {,$HOME/.config/}gtk-3.0
+}
+
+config_temperature() {
+	sudo sensors-detect --auto 1>/dev/null 3>&1
 }
 
 install_vimpkgs () {
 	vim -c PluginInstall  -c quitall
 }
 
+function install_urxvt() {
+	xrdb -merge $HOME/.Xdefault
+}
 
-case $1 in
-"doit")
+function main() {
 	install_vundle
 	install_packages
 	config_keyboard
 	config_lightdm
 	create_symlinks
 	install_vimpkgs
-esac
+	install_urxvt
+}
+
+main

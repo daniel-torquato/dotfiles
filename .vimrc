@@ -17,7 +17,7 @@ Bundle 'gabrielelana/vim-markdown'
 Bundle 'mateusbraga/vim-spell-pt-br'
 Bundle 'matze/vim-move'
 Plugin 'dylanaraps/wal'
-Plugin 'DanielAM2013/MyVim'
+Plugin 'daniel-torquato/myvim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
