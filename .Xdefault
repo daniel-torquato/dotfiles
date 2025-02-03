@@ -1,6 +1,6 @@
 !-------------------------------------------------------------------------------
 ! resolution & colors
-Xft.dpi: 96
+Xft.dpi: 81
 Xft.antialias: true
 Xft.hinting: true
 Xft.rgba: rgb
